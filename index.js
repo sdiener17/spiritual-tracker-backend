@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-const FetchTranslations = require("./database");
+const databaseFunctions = require("./database");
+const rp = require('request-promise');
 
 const app = express()
 app.use(cors())
@@ -8,8 +9,31 @@ app.use(cors())
 app.get('/api', (req, res) => {
   res.status(200).json({api: 'version 1'})
 })
-app.get('/get-translations', (req,res)=>{
-    res.status(200).json(FetchTranslations)
+app.get('/get-translations', async (req,res)=>{
+    databaseFunctions.FetchTranslations().then(response =>{
+        console.log(response);
+        if(response.stat === 0){
+            res.status(501).json({data: 'There was an error fetching your data:'+response.data}).end()
+            return;
+        }
+        res.status(200).json({data: response.data}).end()
+        //res.json(response);
+    });
+    // try {
+    //     const result = await FetchTranslations();
+    //     console.log(result);
+    //     if (result.stat === 0){
+    //         res.status(501).json({data: 'There was an error fetching your data: '+result.data}).end()
+    //     }
+    //     res.status(200).json({data: result.data}).end()
+    //     res.json(result);
+    // }catch (error){
+    //     console.log(error);
+    //     res.sendStatus(501);
+    //   }
+        // res.send({data: result.data});
+
+
 })
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log('server started on port', port))

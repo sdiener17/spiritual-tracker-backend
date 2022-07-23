@@ -4,6 +4,13 @@ VALUES ('sdiener', true);
 INSERT INTO Translations (translation)
 VALUES ('NIV'), ('NASB'), ('ESV'), ('NKJV'), ('NLT');
 
+INSERT INTO Insights (insight_date, insight, category_id)
+VALUES ('2022-07-23', `
+    (1 Peter 3) 3:11 says we must "turn" from evil and do good. I like the picture of actually turning away from evil, not tyring
+    to get both good and evil. (evil---us---good), which way will we turn? Good and evil are in complete opposite directions, so
+    we really can't have both or they'll pull us apart. To fully turn from evil, we have to sever all ties to it and not look back.
+`, 1);
+
 INSERT INTO ScriptureWriting (book, chapters_in_book, translation_id)
 VALUES ('Genesis', 50, 1),
 ('Exodus', 40, 1),
